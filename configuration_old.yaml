@@ -1,0 +1,194 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: -6.18054
+  longitude: 106.828
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jakarta
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  api_password: "Firuze@134679"
+#   base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  - platform: mqtt
+    name: "KU Temperature"
+    state_topic: "tele/main_bedroom/SENSOR"
+    value_template: "{{value_json.DHT11.Temperature}}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "KU Humidity"
+    state_topic: "tele/main_bedroom/SENSOR"
+    value_template: "{{value_json.DHT11.Humidity}}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "KA Temperature"
+    state_topic: "tele/childroom/SENSOR"
+    value_template: "{{value_json.DHT11.Temperature}}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "KA Humidity"
+    state_topic: "tele/childroom/SENSOR"
+    value_template: "{{value_json.DHT11.Humidity}}"
+    unit_of_measurement: "%"
+
+light:
+  - platform: mqtt
+    name: "Teras Depan1"
+    command_topic: "cmnd/front_porch/POWER"
+    state_topic: "tele/front_porch/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Teras Depan2"
+    command_topic: "cmnd/front_porch2/POWER"
+    state_topic: "tele/front_porch2/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "KM Utama"
+    command_topic: "cmnd/main_bedroom/POWER"
+    state_topic: "tele/main_bedroom/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "KM Anak"
+    command_topic: "cmnd/childroom/POWER"
+    state_topic: "tele/childroom/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Kelas A1"
+    command_topic: "cmnd/classroom_a1/POWER"
+    state_topic: "tele/classroom_a1/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Kelas A2"
+    command_topic: "cmnd/classroom_a2/POWER"
+    state_topic: "tele/classroom_a2/STATE"
+    state_value_template: "{{value_json.POWER}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+
+switch:
+  - platform: mqtt
+    name: "Bell Sekolah"
+    command_topic: "cmnd/school_bell/POWER1"
+    state_topic: "tele/school_bell/STATE"
+    state_value_template: "{{value_json.POWER1}}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+#group: !include groups.yaml
+group:
+  main_bedroom:
+    name: KM Utama
+    entities:
+      - sensor.KU_Temperature
+      - sensor.KU_Humidity
+      - light.KM_Utama
+  childroom:
+    name: KM Anak
+    entities:
+      - sensor.KA_Temperature
+      - sensor.KA_Humidity
+      - light.KM_Anak
+  front_porch:
+    name: Teras Depan
+    entities:
+      - light.Teras_Depan1
+      - light.Teras_Depan2
+  classroom_a:
+    name: Kelas A
+    entities:
+      - light.Kelas_A1
+      - light.Kelas_A2
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://192.168.1.26:3218
+
+mqtt:
+  broker: 192.168.1.26
+  username: firuze
+  password: Firuze@134679
+

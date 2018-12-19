@@ -1,0 +1,16 @@
+[connection]
+id=hassos-network
+uuid=6d710668-8b68-4e46-8f5f-ae92614db141
+type=wifi
+
+[wifi]
+mode=infrastructure
+ssid=AZ.ZAHRA.NET
+
+[wifi-security]
+auth-alg=open
+key-mgmt=wpa-psk
+psk=azzahra4579
+
+[ipv4]
+method=auto
