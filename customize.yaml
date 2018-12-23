@@ -8,3 +8,5 @@ group.all_automations:
   hidden: false
 group.all_scripts:
   hidden: false
+binary_sensor.Radar_01:
+  device_class: motion

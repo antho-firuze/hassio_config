@@ -1,43 +1,65 @@
 - id: light-off-temp-above-35
-  alias: 'Turn off Light - Temperature above 35 '
+  alias: Radar Motion - Light ON
   trigger:
-    platform: numeric_state
-    entity_id: sensor.ku_temperature
-    above: 35
+  - entity_id: binary_sensor.radar_01
+    platform: state
+    to: 'on'
+  condition: []
   action:
-   service: homeassistant.turn_off
-   entity_id: light.km_utama
-
-- alias: "Power state on HA start-up"
+  - data:
+      entity_id: light.lolin
+    service: homeassistant.turn_on
+- id: cd49661388ab47d99886f97c5a4d7c46
+  alias: Power state on HA start-up
   trigger:
+  - event: start
     platform: homeassistant
-    event: start
   action:
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/front_porch/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/front_porch2/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/main_bedroom/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/childroom/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/classroom_a1/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/classroom_a2/POWER"
-        payload: ""
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/school_bell/POWER1"
-        payload: ""
+  - data:
+      payload: ''
+      topic: cmnd/front_porch/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/front_porch2/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/main_bedroom/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/childroom/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/classroom_a1/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/classroom_a2/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/school_bell/POWER1
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/classroom_b1/POWER
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/classroom_b2/POWER
+    service: mqtt.publish
+- id: '1545549751588'
+  alias: Radar Motion - Light OFF
+  trigger:
+  - entity_id: binary_sensor.radar_01
+    for: 0:05:00
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: light.lolin
+    service: homeassistant.turn_off

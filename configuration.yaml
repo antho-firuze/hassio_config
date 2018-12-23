@@ -25,7 +25,9 @@ config:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   api_password: "Firuze@134679"
-#   base_url: example.duckdns.org:8123
+  base_url: https://firuze.duckdns.org:8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -62,7 +64,7 @@ sensor:
     name: "KU Temperature"
     state_topic: "tele/main_bedroom/SENSOR"
     value_template: "{{value_json.DHT11.Temperature}}"
-    unit_of_measurement: "�C"
+    unit_of_measurement: "°C"
   - platform: mqtt
     name: "KU Humidity"
     state_topic: "tele/main_bedroom/SENSOR"
@@ -72,10 +74,30 @@ sensor:
     name: "KA Temperature"
     state_topic: "tele/childroom/SENSOR"
     value_template: "{{value_json.DHT11.Temperature}}"
-    unit_of_measurement: "�C"
+    unit_of_measurement: "°C"
   - platform: mqtt
     name: "KA Humidity"
     state_topic: "tele/childroom/SENSOR"
+    value_template: "{{value_json.DHT11.Humidity}}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "A1 Temperature"
+    state_topic: "tele/classroom_a1/SENSOR"
+    value_template: "{{value_json.DHT11.Temperature}}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "A1 Humidity"
+    state_topic: "tele/classroom_a1/SENSOR"
+    value_template: "{{value_json.DHT11.Humidity}}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "B1 Temperature"
+    state_topic: "tele/classroom_b1/SENSOR"
+    value_template: "{{value_json.DHT11.Temperature}}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "B1 Humidity"
+    state_topic: "tele/classroom_b1/SENSOR"
     value_template: "{{value_json.DHT11.Humidity}}"
     unit_of_measurement: "%"
 
@@ -128,6 +150,22 @@ light:
     payload_off: "OFF"
     qos: 1
     retain: true
+  - platform: mqtt
+    name: "Kelas B1"
+    command_topic: "cmnd/classroom_b1/POWER"
+    state_topic: "stat/classroom_b1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Kelas B2"
+    command_topic: "cmnd/classroom_b2/POWER"
+    state_topic: "stat/classroom_b2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
 
 switch:
   - platform: mqtt
@@ -138,6 +176,12 @@ switch:
     payload_off: "OFF"
     qos: 1
     retain: true
+
+binary_sensor:
+  - platform: mqtt
+    name: "Radar 01"
+    state_topic: "tele/radar/SENSOR"
+    value_template: "{{value_json.Switch1}}"
 
 # Text to speech
 tts:
@@ -168,8 +212,17 @@ group:
   classroom_a:
     name: Kelas A
     entities:
+      - sensor.A1_Temperature
+      - sensor.A1_Humidity
       - light.Kelas_A1
       - light.Kelas_A2
+  classroom_b:
+    name: Kelas B
+    entities:
+      - sensor.B1_Temperature
+      - sensor.B1_Humidity
+      - light.Kelas_B1
+      - light.Kelas_B2
 
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -185,3 +238,8 @@ mqtt:
   username: firuze
   password: Firuze@134679
 
+google_assistant:
+  project_id: home-assistant-id
+  api_key: AIzaSyBk-mJM9mYYytoWFJINEGnQd1afcWwa8Bk
+  exposed_domains:
+    - light
