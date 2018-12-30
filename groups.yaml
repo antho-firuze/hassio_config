@@ -1,0 +1,41 @@
+main_bedroom:
+  name: Kamar Utama
+  entities:
+    - sensor.KU_Temperature
+    - sensor.KU_Humidity
+    - light.Kamar_Utama
+    - light.Kamar_Utama2
+childroom:
+  name: Kamar Anak
+  entities:
+    - sensor.KA_Temperature
+    - sensor.KA_Humidity
+    - light.Kamar_Anak
+front_porch:
+  name: Teras Depan
+  entities:
+    - light.Teras_Depan1
+    - light.Teras_Depan2
+classroom_a:
+  name: Kelas A
+  entities:
+    - sensor.A1_Temperature
+    - sensor.A1_Humidity
+    - light.Kelas_A1
+    - light.Kelas_A2
+classroom_b:
+  name: Kelas B
+  entities:
+    - sensor.B1_Temperature
+    - sensor.B1_Humidity
+    - light.Kelas_B1
+    - light.Kelas_B2
+    - light.Kelas_B3
+bathroom:
+  name: Kamar Mandi
+  entities:
+    - light.Kamar_Mandi
+kitchen:
+  name: Dapur
+  entities:
+    - light.Dapur

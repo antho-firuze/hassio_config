@@ -119,7 +119,7 @@ light:
     qos: 1
     retain: true
   - platform: mqtt
-    name: "KM Utama"
+    name: "Kamar Utama"
     command_topic: "cmnd/main_bedroom/POWER"
     state_topic: "stat/main_bedroom/POWER"
     payload_on: "ON"
@@ -127,7 +127,15 @@ light:
     qos: 1
     retain: true
   - platform: mqtt
-    name: "KM Anak"
+    name: "Kamar Utama2"
+    command_topic: "cmnd/main_bedroom2/POWER"
+    state_topic: "stat/main_bedroom2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Kamar Anak"
     command_topic: "cmnd/childroom/POWER"
     state_topic: "stat/childroom/POWER"
     payload_on: "ON"
@@ -166,6 +174,38 @@ light:
     payload_off: "OFF"
     qos: 1
     retain: true
+  - platform: mqtt
+    name: "Kelas B3"
+    command_topic: "cmnd/classroom_b3/POWER"
+    state_topic: "stat/classroom_b3/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Lolin"
+    command_topic: "cmnd/lolin/POWER"
+    state_topic: "stat/lolin/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Kamar Mandi"
+    command_topic: "cmnd/bathroom/POWER"
+    state_topic: "stat/bathroom/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Dapur"
+    command_topic: "cmnd/kitchen/POWER"
+    state_topic: "stat/kitchen/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
 
 switch:
   - platform: mqtt
@@ -179,8 +219,12 @@ switch:
 
 binary_sensor:
   - platform: mqtt
-    name: "Radar 01"
+    name: "Radar 1"
     state_topic: "tele/radar/SENSOR"
+    value_template: "{{value_json.Switch1}}"
+  - platform: mqtt
+    name: "PIR 1"
+    state_topic: "tele/pir/SENSOR"
     value_template: "{{value_json.Switch1}}"
 
 # Text to speech
@@ -190,40 +234,11 @@ tts:
 # Cloud
 cloud:
 
-#group: !include groups.yaml
-group:
-  main_bedroom:
-    name: KM Utama
-    entities:
-      - sensor.KU_Temperature
-      - sensor.KU_Humidity
-      - light.KM_Utama
-  childroom:
-    name: KM Anak
-    entities:
-      - sensor.KA_Temperature
-      - sensor.KA_Humidity
-      - light.KM_Anak
-  front_porch:
-    name: Teras Depan
-    entities:
-      - light.Teras_Depan1
-      - light.Teras_Depan2
-  classroom_a:
-    name: Kelas A
-    entities:
-      - sensor.A1_Temperature
-      - sensor.A1_Humidity
-      - light.Kelas_A1
-      - light.Kelas_A2
-  classroom_b:
-    name: Kelas B
-    entities:
-      - sensor.B1_Temperature
-      - sensor.B1_Humidity
-      - light.Kelas_B1
-      - light.Kelas_B2
+google_assistant:
+  project_id: home-assistant-id
+  api_key: AIzaSyBk-mJM9mYYytoWFJINEGnQd1afcWwa8Bk
 
+group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
@@ -231,15 +246,15 @@ panel_iframe:
   configurator:
     title: Configurator
     icon: mdi:wrench
-    url: http://192.168.1.26:3218
+    url: https://192.168.1.26:3218
 
 mqtt:
   broker: 192.168.1.26
   username: firuze
   password: Firuze@134679
 
-google_assistant:
-  project_id: home-assistant-id
-  api_key: AIzaSyBk-mJM9mYYytoWFJINEGnQd1afcWwa8Bk
-  exposed_domains:
-    - light
+#android_ip_webcam:
+#  - host: 192.168.1.10
+#    port: 8910
+#    username: "firuze"
+#    password: "347893Firuze"

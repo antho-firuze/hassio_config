@@ -1,65 +1,94 @@
-- id: light-off-temp-above-35
-  alias: Radar Motion - Light ON
-  trigger:
-  - entity_id: binary_sensor.radar_01
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data:
-      entity_id: light.lolin
-    service: homeassistant.turn_on
 - id: cd49661388ab47d99886f97c5a4d7c46
   alias: Power state on HA start-up
   trigger:
   - event: start
     platform: homeassistant
   action:
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/front_porch/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/front_porch2/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/main_bedroom/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
+      payload: ''
+      topic: cmnd/main_bedroom2/POWER
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/childroom/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/classroom_a1/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/classroom_a2/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/school_bell/POWER1
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/classroom_b1/POWER
-    service: mqtt.publish
-  - data:
+  - service: mqtt.publish
+    data:
       payload: ''
       topic: cmnd/classroom_b2/POWER
-    service: mqtt.publish
-- id: '1545549751588'
-  alias: Radar Motion - Light OFF
+  - service: mqtt.publish
+    data:
+      payload: ''
+      topic: cmnd/classroom_b3/POWER
+  - service: mqtt.publish
+    data:
+      payload: ''
+      topic: cmnd/bathroom/POWER
+  - service: mqtt.publish
+    data:
+      payload: ''
+      topic: cmnd/kitchen/POWER
+- alias: Radar Motion - Light ON
   trigger:
-  - entity_id: binary_sensor.radar_01
-    for: 0:05:00
     platform: state
-    to: 'off'
-  condition: []
+    entity_id: binary_sensor.radar_1
+    to: 'on'
   action:
-  - data:
-      entity_id: light.lolin
+    service: homeassistant.turn_on
+    entity_id: light.lolin
+- alias: Radar Motion - Light OFF
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_1
+    to: 'off'
+    for:
+      minutes: 5
+  action:
     service: homeassistant.turn_off
+    entity_id: light.lolin
+- alias: PIR Motion - ON
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_1
+    to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: light.lolin
+- alias: PIR Motion - OFF
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_1
+    to: 'off'
+    for:
+      minutes: 5
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.lolin
