@@ -253,6 +253,10 @@ mqtt:
   username: firuze
   password: Firuze@134679
 
+timer:
+  light_priority:
+    duration: '00:30:00'
+    
 #android_ip_webcam:
 #  - host: 192.168.1.10
 #    port: 8910

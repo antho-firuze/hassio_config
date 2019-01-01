@@ -56,39 +56,34 @@
     data:
       payload: ''
       topic: cmnd/kitchen/POWER
-- alias: Radar Motion - Light ON
+      
+- alias: Motion Detected (PIR & RADAR)
   trigger:
     platform: state
-    entity_id: binary_sensor.radar_1
+    entity_id: binary_sensor.pir_1, binary_sensor.radar_1
     to: 'on'
   action:
-    service: homeassistant.turn_on
-    entity_id: light.lolin
-- alias: Radar Motion - Light OFF
+    - service: homeassistant.turn_on
+      entity_id: 
+        - light.lolin
+        - light.dapur
+        - light.kamar_mandi
+    - service: timer.cancel
+      data:
+        entity_id: timer.light_priority
+    - service: timer.start
+      data:
+        entity_id: timer.light_priority
+      
+- alias: Turn Off Light Priority
   trigger:
-    platform: state
-    entity_id: binary_sensor.pir_1
-    to: 'off'
-    for:
-      minutes: 5
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_priority
   action:
     service: homeassistant.turn_off
-    entity_id: light.lolin
-- alias: PIR Motion - ON
-  trigger:
-    platform: state
-    entity_id: binary_sensor.pir_1
-    to: 'on'
-  action:
-    service: homeassistant.turn_on
-    entity_id: light.lolin
-- alias: PIR Motion - OFF
-  trigger:
-    platform: state
-    entity_id: binary_sensor.pir_1
-    to: 'off'
-    for:
-      minutes: 5
-  action:
-    service: homeassistant.turn_off
-    entity_id: light.lolin
+    entity_id: 
+      - light.lolin
+      - light.dapur
+      - light.kamar_mandi
