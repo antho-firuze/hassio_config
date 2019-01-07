@@ -56,8 +56,9 @@
     data:
       payload: ''
       topic: cmnd/kitchen/POWER
-      
-- alias: Motion Detected (PIR & RADAR)
+
+# Light Priority
+- alias: Turn On Light Priority
   trigger:
     platform: state
     entity_id: binary_sensor.pir_1, binary_sensor.radar_1
@@ -65,25 +66,392 @@
   action:
     - service: homeassistant.turn_on
       entity_id: 
-        - light.lolin
         - light.dapur
         - light.kamar_mandi
     - service: timer.cancel
       data:
-        entity_id: timer.light_priority
+        entity_id: timer.priority_light
     - service: timer.start
       data:
-        entity_id: timer.light_priority
-      
+        entity_id: timer.priority_light
 - alias: Turn Off Light Priority
   trigger:
     platform: event
     event_type: timer.finished
     event_data:
-      entity_id: timer.light_priority
+      entity_id: timer.priority_light
   action:
     service: homeassistant.turn_off
     entity_id: 
-      - light.lolin
       - light.dapur
       - light.kamar_mandi
+
+# Alarm Mode
+- alias: Turn On Alarm (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_4
+    to: 'on'
+  condition:
+    condition: time
+    after: '21:00:00'
+    before: '03:00:00'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.front_porch
+    - service: timer.start
+      data:
+        entity_id: timer.front_porch
+    - service: homeassistant.turn_on
+      entity_id: light.lollin
+- alias: Turn Off Alarm (Timer)
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.front_porch
+  condition:
+    condition: time
+    after: '23:00:00'
+    before: '03:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.lollin
+
+# Front Porch
+- alias: Turn On Front Porch (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_4
+    to: 'on'
+  condition:
+    condition: time
+    after: '03:00:00'
+    before: '21:00:00'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.front_porch
+    - service: timer.start
+      data:
+        entity_id: timer.front_porch
+- alias: Turn On Front Porch1
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:45:00"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.teras_depan1
+- alias: Turn Off Front Porch1
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: '-00:15:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.teras_depan1
+- alias: Turn On Front Porch2
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "01:30:00"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.teras_depan2
+- alias: Turn Off Front Porch2
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: '-02:45:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.teras_depan2
+      
+# Main Bedroom
+- alias: Turn On Main Bedroom (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_1
+    to: 'on'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.main_bedroom
+    - service: timer.start
+      data:
+        entity_id: timer.main_bedroom
+- alias: Turn Off Main Bedroom (Timer)
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.main_bedroom
+  condition:
+    condition: time
+    after: '21:00:00'
+    before: '03:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.kamar_utama
+    
+- alias: Turn On Main Bedroom
+  trigger:
+    platform: time
+    at: '03:00:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.kamar_utama
+- alias: Turn Off Main Bedroom
+  trigger:
+    platform: time
+    at: '21:30:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.kamar_utama
+- alias: Turn On Main Bedroom2
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: '-01:22:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.kamar_utama2
+- alias: Turn Off Main Bedroom2
+  trigger:
+    platform: time
+    at: '21:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.kamar_utama2
+      
+# Childroom
+- alias: Turn On Childroom (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_1
+    to: 'on'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.childroom
+    - service: timer.start
+      data:
+        entity_id: timer.childroom
+- alias: Turn Off Childroom (Timer)
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.childroom
+  condition:
+    condition: time
+    after: '21:00:00'
+    before: '03:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.kamar_anak
+- alias: Turn On Childroom
+  trigger:
+    platform: time
+    at: '03:45:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.kamar_anak
+- alias: Turn Off Childroom
+  trigger:
+    platform: time
+    at: '21:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.kamar_anak
+
+# Classroom A
+- alias: Turn On Classroom A (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.radar_1
+    to: 'on'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.classroom_a
+    - service: timer.start
+      data:
+        entity_id: timer.classroom_a
+- alias: Turn On Classroom A1
+  trigger:
+    platform: time
+    at: '04:00:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.kelas_a1
+- alias: Turn Off Classroom A1 & A2
+  trigger:
+    platform: time
+    at: '21:00:00'
+  condition:
+    condition: time
+    weekday:
+      - sun
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - light.kelas_a1
+        - light.kelas_a2
+- alias: Turn Off Classroom A1 & A2
+  trigger:
+    platform: time
+    at: '23:00:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - light.kelas_a1
+        - light.kelas_a2
+- alias: Turn On Classroom A2
+  trigger:
+    platform: time
+    at: '05:00:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.kelas_a2
+- alias: Turn Off Classroom A2
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.classroom_a
+  condition:
+    condition: time
+    after: '07:00:00'
+    before: '18:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.kelas_a2
+
+# Classroom B
+- alias: Turn On Classroom B (Timer)
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_2, binary_sensor.pir_3
+    to: 'on'
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.classroom_b
+    - service: timer.start
+      data:
+        entity_id: timer.classroom_b
+    - service: homeassistant.turn_on
+      entity_id: 
+        - light.kelas_b1
+        - light.kelas_b2
+        - light.kelas_b3
+- alias: Turn Off Classroom B (Timer)
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.classroom_b
+#  condition:
+#    condition: time
+#    after: '11:30:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: 
+      - light.kelas_b1
+      - light.kelas_b2
+      - light.kelas_b3
+
+# School Bell
+- alias: Turn On School Bell In
+  trigger:
+    platform: time
+    at: '08:00:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: script.turn_on
+      entity_id: script.bell_ring_in_break
+- alias: Turn On School Bell Break
+  trigger:
+    platform: time
+    at: '09:30:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: script.turn_on
+      entity_id: script.bell_ring_in_break
+- alias: Turn On School Bell Out (A)
+  trigger:
+    platform: time
+    at: '10:00:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: script.turn_on
+      entity_id: script.bell_ring_out
+- alias: Turn On School Bell Out (B)
+  trigger:
+    platform: time
+    at: '11:30:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: script.turn_on
+      entity_id: script.bell_ring_out
+
+- alias: Turn On Lollin
+  trigger:
+    platform: time
+    at: '21:00:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: light.lollin
+- alias: Turn Off Lollin (Timer)
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.main_bedroom
+  condition:
+    condition: time
+    after: '21:00:00'
+    before: '03:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: light.lollin

@@ -1,0 +1,62 @@
+bell_ring_in_break:
+  alias: Bell Ring On (In & Break)
+  sequence:
+    - alias: Ring On 1
+      service: homeassistant.turn_on
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring Off 1
+      service: homeassistant.turn_off
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring On 2
+      service: homeassistant.turn_on
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 2
+    - alias: Ring Off 2
+      service: homeassistant.turn_off
+      data:
+        entity_id: switch.bell_sekolah
+bell_ring_out:
+  alias: Bell Ring On (Out)
+  sequence:
+    - alias: Ring On 1
+      service: homeassistant.turn_on
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring Off 1
+      service: homeassistant.turn_off
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring On 2
+      service: homeassistant.turn_on
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring Off 2
+      service: homeassistant.turn_off
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring On 3
+      service: homeassistant.turn_on
+      data:
+        entity_id: switch.bell_sekolah
+    - delay:
+        seconds: 1
+    - alias: Ring Off 3
+      service: homeassistant.turn_off
+      data:
+        entity_id: switch.bell_sekolah

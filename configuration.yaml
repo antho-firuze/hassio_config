@@ -25,7 +25,7 @@ config:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   api_password: "Firuze@134679"
-  base_url: https://firuze.duckdns.org:8123
+  base_url: https://firuze.duckdns.org
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
@@ -183,14 +183,6 @@ light:
     qos: 1
     retain: true
   - platform: mqtt
-    name: "Lolin"
-    command_topic: "cmnd/lolin/POWER"
-    state_topic: "stat/lolin/POWER"
-    payload_on: "ON"
-    payload_off: "OFF"
-    qos: 1
-    retain: true
-  - platform: mqtt
     name: "Kamar Mandi"
     command_topic: "cmnd/bathroom/POWER"
     state_topic: "stat/bathroom/POWER"
@@ -202,6 +194,14 @@ light:
     name: "Dapur"
     command_topic: "cmnd/kitchen/POWER"
     state_topic: "stat/kitchen/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
+    name: "Lollin"
+    command_topic: "cmnd/lollin/POWER"
+    state_topic: "stat/lollin/POWER"
     payload_on: "ON"
     payload_off: "OFF"
     qos: 1
@@ -225,6 +225,18 @@ binary_sensor:
   - platform: mqtt
     name: "PIR 1"
     state_topic: "tele/pir/SENSOR"
+    value_template: "{{value_json.Switch1}}"
+  - platform: mqtt
+    name: "PIR 2"
+    state_topic: "tele/pir_2/SENSOR"
+    value_template: "{{value_json.Switch1}}"
+  - platform: mqtt
+    name: "PIR 3"
+    state_topic: "tele/pir_3/SENSOR"
+    value_template: "{{value_json.Switch1}}"
+  - platform: mqtt
+    name: "PIR 4"
+    state_topic: "tele/pir_4/SENSOR"
     value_template: "{{value_json.Switch1}}"
 
 # Text to speech
@@ -254,9 +266,19 @@ mqtt:
   password: Firuze@134679
 
 timer:
-  light_priority:
-    duration: '00:30:00'
-    
+  front_porch:
+    duration: '00:05:00'
+  priority_light:
+    duration: '00:20:00'
+  classroom_a:
+    duration: '00:15:00'
+  classroom_b:
+    duration: '00:15:00'
+  childroom:
+    duration: '00:10:00'
+  main_bedroom:
+    duration: '00:05:00'
+
 #android_ip_webcam:
 #  - host: 192.168.1.10
 #    port: 8910
