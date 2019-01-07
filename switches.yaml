@@ -1,0 +1,8 @@
+- platform: mqtt
+  name: "Bell Sekolah"
+  command_topic: "cmnd/school_bell/POWER1"
+  state_topic: "stat/school_bell/POWER1"
+  payload_on: "ON"
+  payload_off: "OFF"
+  qos: 1
+  retain: true

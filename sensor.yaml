@@ -1,0 +1,42 @@
+# Weather prediction
+- platform: yr
+- platform: mqtt
+  name: "KU Temperature"
+  state_topic: "tele/main_bedroom/SENSOR"
+  value_template: "{{value_json.DHT11.Temperature}}"
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "KU Humidity"
+  state_topic: "tele/main_bedroom/SENSOR"
+  value_template: "{{value_json.DHT11.Humidity}}"
+  unit_of_measurement: "%"
+- platform: mqtt
+  name: "KA Temperature"
+  state_topic: "tele/childroom/SENSOR"
+  value_template: "{{value_json.DHT11.Temperature}}"
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "KA Humidity"
+  state_topic: "tele/childroom/SENSOR"
+  value_template: "{{value_json.DHT11.Humidity}}"
+  unit_of_measurement: "%"
+- platform: mqtt
+  name: "A1 Temperature"
+  state_topic: "tele/classroom_a1/SENSOR"
+  value_template: "{{value_json.DHT11.Temperature}}"
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "A1 Humidity"
+  state_topic: "tele/classroom_a1/SENSOR"
+  value_template: "{{value_json.DHT11.Humidity}}"
+  unit_of_measurement: "%"
+- platform: mqtt
+  name: "B1 Temperature"
+  state_topic: "tele/classroom_b1/SENSOR"
+  value_template: "{{value_json.DHT11.Temperature}}"
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "B1 Humidity"
+  state_topic: "tele/classroom_b1/SENSOR"
+  value_template: "{{value_json.DHT11.Humidity}}"
+  unit_of_measurement: "%"
