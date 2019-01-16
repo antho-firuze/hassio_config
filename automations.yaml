@@ -340,38 +340,73 @@
       entity_id: light.kelas_a2
 
 # Classroom B
-- alias: Turn On Classroom B (Timer)
+#- alias: Turn On Classroom B (Timer)
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.pir_2, binary_sensor.pir_3
+#    to: 'on'
+#  action:
+#    - service: timer.cancel
+#      data:
+#        entity_id: timer.classroom_b
+#    - service: timer.start
+#      data:
+#        entity_id: timer.classroom_b
+#    - service: homeassistant.turn_on
+#      entity_id: 
+#        - light.kelas_b1
+#        - light.kelas_b2
+#        - light.kelas_b3
+#- alias: Turn Off Classroom B (Timer)
+#  trigger:
+#    platform: event
+#    event_type: timer.finished
+#    event_data:
+#      entity_id: timer.classroom_b
+#  condition:
+#    condition: time
+#    after: '11:30:00'
+#  action:
+#    service: homeassistant.turn_off
+#    entity_id: 
+#      - light.kelas_b1
+#      - light.kelas_b2
+#      - light.kelas_b3
+- alias: Turn On Classroom B (Schedule)
   trigger:
-    platform: state
-    entity_id: binary_sensor.pir_2, binary_sensor.pir_3
-    to: 'on'
+    platform: time
+    at: '05:15:00'
   action:
-    - service: timer.cancel
-      data:
-        entity_id: timer.classroom_b
-    - service: timer.start
-      data:
-        entity_id: timer.classroom_b
     - service: homeassistant.turn_on
       entity_id: 
         - light.kelas_b1
         - light.kelas_b2
         - light.kelas_b3
-- alias: Turn Off Classroom B (Timer)
+- alias: Turn Off Classroom B (Schedule)
   trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.classroom_b
-#  condition:
-#    condition: time
-#    after: '11:30:00'
+    platform: time
+    at: '07:00:00'
+  condition:
+    condition: time
+    weekday:
+      - sun
+      - sat
   action:
-    service: homeassistant.turn_off
-    entity_id: 
-      - light.kelas_b1
-      - light.kelas_b2
-      - light.kelas_b3
+    - service: homeassistant.turn_off
+      entity_id: 
+        - light.kelas_b1
+        - light.kelas_b2
+        - light.kelas_b3
+- alias: Turn Off Classroom B (Schedule)
+  trigger:
+    platform: time
+    at: '17:30:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - light.kelas_b1
+        - light.kelas_b2
+        - light.kelas_b3
 
 # School Bell
 - alias: Turn On School Bell In
