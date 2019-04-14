@@ -159,6 +159,14 @@ light:
     qos: 1
     retain: true
   - platform: mqtt
+    name: "Kelas A3"
+    command_topic: "cmnd/classroom_a3/POWER"
+    state_topic: "stat/classroom_a3/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
+  - platform: mqtt
     name: "Kelas B1"
     command_topic: "cmnd/classroom_b1/POWER"
     state_topic: "stat/classroom_b1/POWER"
@@ -206,6 +214,14 @@ light:
     payload_off: "OFF"
     qos: 1
     retain: true
+  - platform: mqtt
+    name: "Kamar Utama AC"
+    command_topic: "cmnd/main_bedroom_ac/POWER"
+    state_topic: "stat/main_bedroom_ac/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    qos: 1
+    retain: true
 
 switch:
   - platform: mqtt
@@ -237,6 +253,10 @@ binary_sensor:
   - platform: mqtt
     name: "PIR 4"
     state_topic: "tele/pir_4/SENSOR"
+    value_template: "{{value_json.Switch1}}"
+  - platform: mqtt
+    name: "PIR 5"
+    state_topic: "tele/pir_5/SENSOR"
     value_template: "{{value_json.Switch1}}"
 
 # Text to speech

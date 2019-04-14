@@ -1,0 +1,59 @@
+entities:
+  - entity: automation.restart_ha_schedule
+  - entity: automation.turn_off_front_porch1_am
+  - entity: automation.turn_off_front_porch2_am
+  - entity: automation.turn_on_front_porch1_pm
+  - entity: automation.turn_on_front_porch2_pm
+  - entity: automation.turn_on_main_bedroom_am
+  - entity: automation.turn_on_main_bedroom2_am
+  - entity: automation.turn_off_main_bedroom_pm
+  - entity: automation.turn_off_main_bedroom2_pm
+  - entity: automation.turn_on_childroom_am
+  - entity: automation.turn_off_childroom_pm
+  - entity: automation.turn_on_classroom_a1_am
+  - entity: automation.turn_on_classroom_a2_am
+  - entity: automation.turn_off_classroom_a_am_1
+  - entity: automation.turn_off_classroom_a_am_2
+  - entity: automation.turn_on_classroom_a_pm
+  - entity: automation.turn_off_classroom_a2_pm
+  - entity: automation.turn_off_classroom_a_pm_1
+  - entity: automation.turn_off_classroom_a_pm_2
+  - entity: automation.turn_on_classroom_b_am
+  - entity: automation.turn_off_classroom_b_am_1
+  - entity: automation.turn_off_classroom_b_am_2
+  - entity: automation.turn_off_classroom_b_pm
+  - entity: automation.turn_on_classroom_b_pm
+  - entity: automation.turn_on_school_bell_in
+  - entity: automation.turn_on_school_bell_break
+  - entity: automation.turn_on_school_bell_out_a
+  - entity: automation.turn_on_school_bell_out_b
+title: Schedule
+type: entities
+
+entities:
+  - entity: automation.turn_on_light_priority
+  - entity: automation.turn_off_light_priority
+  - entity: automation.turn_off_alarm_sensor
+  - entity: automation.turn_on_alarm_sensor
+  - entity: automation.turn_on_front_porch_sensor
+  - entity: automation.turn_on_main_bedroom_sensor
+  - entity: automation.turn_off_main_bedroom_sensor
+  - entity: automation.turn_on_childroom_sensor
+  - entity: automation.turn_off_childroom_sensor
+  - entity: automation.turn_on_classroom_a_sensor
+  - entity: automation.turn_off_classroom_a2_sensor
+  - entity: automation.turn_on_classroom_b_sensor
+  - entity: automation.turn_off_classroom_b_sensor
+title: Sensor
+type: entities
+
+entities:
+  - entity: automation.power_state_on_ha_start_up
+title: Automation
+type: entities
+
+entities:
+  - entity: automation.turn_off_lollin_timer
+  - entity: automation.turn_on_lollin
+title: Tester
+type: entities
