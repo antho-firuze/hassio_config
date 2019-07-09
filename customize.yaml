@@ -1,11 +1,11 @@
-group.all_switches:
-  hidden: false
-group.all_lights:
-  hidden: false
-group.all_devices:
-  hidden: true
-group.all_automations:
-  hidden: true
+#group.all_switches:
+#  hidden: true
+#group.all_lights:
+#  hidden: true
+#group.all_devices:
+#  hidden: true
+#group.all_automations:
+#  hidden: true
 group.all_scripts:
   hidden: false
 binary_sensor.radar_1:
@@ -17,4 +17,6 @@ binary_sensor.pir_2:
 binary_sensor.pir_3:
   device_class: motion
 binary_sensor.pir_4:
+  device_class: motion
+binary_sensor.pir_5:
   device_class: motion

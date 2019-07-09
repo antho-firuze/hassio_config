@@ -100,6 +100,16 @@ sensor:
     state_topic: "tele/classroom_b1/SENSOR"
     value_template: "{{value_json.DHT11.Humidity}}"
     unit_of_measurement: "%"
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: memory_use_percent
+      - type: memory_free
+      - type: swap_use_percent
+      - type: processor_use
 
 light:
   - platform: mqtt
