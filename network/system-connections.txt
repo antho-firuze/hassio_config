@@ -13,4 +13,4 @@ key-mgmt=wpa-psk
 psk=azzahra4579
 
 [ipv4]
-method=auto
+dns=8.8.8.8;8.8.4.4;
